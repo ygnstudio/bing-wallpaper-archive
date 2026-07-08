@@ -96,21 +96,42 @@ class GenerateIndexScriptTest(unittest.TestCase):
             image_path = root_dir / "wallpapers" / "2026" / "07" / "20260708.jpg"
             image_path.parent.mkdir(parents=True)
             image_path.write_bytes(b"image")
+            metadata = {
+                "2026-07-08": {
+                    "title": "Bing title",
+                    "copyright": "Original copyright",
+                    "url": "https://www.bing.com/ignored.jpg",
+                    "copyrightlink": "https://www.bing.com/ignored",
+                }
+            }
 
-            record = generate_index.build_index_record(image_path, root_dir)
+            record = generate_index.build_index_record(image_path, root_dir, metadata)
 
             self.assertEqual(
                 record,
                 {
                     "date": "2026-07-08",
-                    "title": "",
-                    "copyright": "",
+                    "title": "Bing title",
+                    "copyright": "Original copyright",
                     "image": "wallpapers/2026/07/20260708.jpg",
                     "thumbnail": "thumbnails/2026/07/20260708.jpg",
                 },
             )
+            self.assertEqual(set(record), {"date", "title", "copyright", "image", "thumbnail"})
             self.assertNotIn("\\", record["image"])
             self.assertNotIn("\\", record["thumbnail"])
+
+    def test_build_index_record_uses_empty_strings_when_metadata_missing(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root_dir = Path(temp_dir)
+            image_path = root_dir / "wallpapers" / "2026" / "07" / "20260708.jpg"
+            image_path.parent.mkdir(parents=True)
+            image_path.write_bytes(b"image")
+
+            record = generate_index.build_index_record(image_path, root_dir, {})
+
+            self.assertEqual(record["title"], "")
+            self.assertEqual(record["copyright"], "")
 
     def test_build_index_records_sorts_desc_and_warns_for_missing_thumbnail(self):
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -134,6 +155,28 @@ class GenerateIndexScriptTest(unittest.TestCase):
                 "Warning: thumbnail not found for wallpapers/2026/07/20260708.jpg",
                 output.getvalue(),
             )
+
+    def test_metadata_json_load_handles_missing_empty_invalid_and_object(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root_dir = Path(temp_dir)
+            metadata_path = root_dir / "data" / "metadata.json"
+
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                self.assertEqual(generate_index.load_metadata(root_dir), {})
+            self.assertIn("Warning: data/metadata.json not found", output.getvalue())
+
+            metadata_path.parent.mkdir(parents=True)
+            metadata_path.write_text("", encoding="utf-8")
+            self.assertEqual(generate_index.load_metadata(root_dir), {})
+
+            metadata = {"2026-07-08": {"title": "Title", "copyright": "Copyright"}}
+            metadata_path.write_text(json.dumps(metadata), encoding="utf-8")
+            self.assertEqual(generate_index.load_metadata(root_dir), metadata)
+
+            metadata_path.write_text("{broken json", encoding="utf-8")
+            with self.assertRaises(ValueError):
+                generate_index.load_metadata(root_dir)
 
     def test_write_index_uses_utf8_indent_no_ascii_escape_and_final_newline(self):
         with tempfile.TemporaryDirectory() as temp_dir:

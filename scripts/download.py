@@ -103,6 +103,11 @@ def get_hash_file(root_dir=ROOT_DIR):
     return Path(root_dir) / "data" / "hash.json"
 
 
+def get_metadata_file(root_dir=ROOT_DIR):
+    """Return the daily wallpaper metadata file path."""
+    return Path(root_dir) / "data" / "metadata.json"
+
+
 def load_hashes(path):
     """Load hash metadata from data/hash.json."""
     hash_path = Path(path)
@@ -133,6 +138,37 @@ def save_hashes(path, hashes):
     )
 
 
+def load_metadata(path):
+    """Load daily wallpaper metadata from data/metadata.json."""
+    metadata_path = Path(path)
+    if not metadata_path.exists():
+        return {}
+
+    content = metadata_path.read_text(encoding="utf-8")
+    if not content.strip():
+        return {}
+
+    try:
+        metadata = json.loads(content)
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"Invalid JSON in {metadata_path}: {exc}") from exc
+
+    if not isinstance(metadata, dict):
+        raise ValueError(f"Expected {metadata_path} to contain a JSON object.")
+    return metadata
+
+
+def save_metadata(path, metadata):
+    """Save daily wallpaper metadata to data/metadata.json."""
+    metadata_path = Path(path)
+    metadata_path.parent.mkdir(parents=True, exist_ok=True)
+    sorted_metadata = {key: metadata[key] for key in sorted(metadata)}
+    metadata_path.write_text(
+        json.dumps(sorted_metadata, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+
 def download_image(url):
     """Download image bytes from a 1080P URL."""
     print("Downloading 1080P image...")
@@ -159,6 +195,7 @@ def process_wallpaper(metadata, root_dir=ROOT_DIR, downloader=download_image, to
     hashes = load_hashes(hash_file)
 
     if wallpaper_path.exists():
+        update_metadata(metadata, wallpaper_date, wallpaper_path, image_url, root_path)
         existing_content = wallpaper_path.read_bytes()
         existing_hash = calculate_sha256(existing_content)
         if existing_hash in hashes:
@@ -178,12 +215,14 @@ def process_wallpaper(metadata, root_dir=ROOT_DIR, downloader=download_image, to
     image_hash = calculate_sha256(content)
     if image_hash in hashes:
         print("Duplicate image hash found, skipping.")
+        print("Metadata not updated because target wallpaper file was not saved.")
         return STATUS_DUPLICATE
 
     wallpaper_path.parent.mkdir(parents=True, exist_ok=True)
     wallpaper_path.write_bytes(content)
     hashes[image_hash] = build_hash_record(wallpaper_date, wallpaper_path, image_url, root_path)
     save_hashes(hash_file, hashes)
+    update_metadata(metadata, wallpaper_date, wallpaper_path, image_url, root_path)
 
     print(f"Saved wallpaper: {relative_path(wallpaper_path, root_path)}")
     print(f"Updated hash file: {relative_path(hash_file, root_path)}")
@@ -198,6 +237,36 @@ def build_hash_record(wallpaper_date, wallpaper_path, image_url, root_dir=ROOT_D
         "path": relative_path(wallpaper_path, root_path),
         "url": image_url,
     }
+
+
+def build_metadata_record(api_metadata, wallpaper_date, image_url, wallpaper_path, root_dir=ROOT_DIR):
+    """Build one data/metadata.json record from Bing API metadata."""
+    root_path = Path(root_dir)
+    title = api_metadata.get("title")
+    copyright_text = api_metadata.get("copyright")
+    return {
+        "date": wallpaper_date.isoformat(),
+        "title": title if isinstance(title, str) and title else "",
+        "copyright": copyright_text if isinstance(copyright_text, str) else "",
+        "url": image_url,
+        "image": relative_path(wallpaper_path, root_path),
+    }
+
+
+def update_metadata(api_metadata, wallpaper_date, wallpaper_path, image_url, root_dir=ROOT_DIR):
+    """Update data/metadata.json for one saved wallpaper file."""
+    root_path = Path(root_dir)
+    metadata_file = get_metadata_file(root_path)
+    metadata_records = load_metadata(metadata_file)
+    metadata_records[wallpaper_date.isoformat()] = build_metadata_record(
+        api_metadata,
+        wallpaper_date,
+        image_url,
+        wallpaper_path,
+        root_path,
+    )
+    save_metadata(metadata_file, metadata_records)
+    print(f"Updated metadata file: {relative_path(metadata_file, root_path)}")
 
 
 def relative_path(path, root_dir=ROOT_DIR):

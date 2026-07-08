@@ -8,6 +8,7 @@ from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 INDEX_FILE = ROOT_DIR / "data" / "index.json"
+METADATA_FILE = ROOT_DIR / "data" / "metadata.json"
 DATE_FILENAME_RE = re.compile(r"^\d{8}\.jpg$")
 
 
@@ -68,18 +69,50 @@ def get_thumbnail_path(image_path, root_dir=ROOT_DIR):
     return root_path / "thumbnails" / relative_image_path
 
 
-def build_index_record(image_path, root_dir=ROOT_DIR):
+def load_metadata(root_dir=ROOT_DIR):
+    """Load data/metadata.json records if available."""
+    root_path = Path(root_dir)
+    metadata_path = root_path / "data" / "metadata.json"
+    if not metadata_path.exists():
+        print("Warning: data/metadata.json not found. Generating index with empty title and copyright.")
+        return {}
+
+    content = metadata_path.read_text(encoding="utf-8")
+    if not content.strip():
+        return {}
+
+    try:
+        metadata = json.loads(content)
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"Invalid JSON in data/metadata.json: {exc}") from exc
+
+    if not isinstance(metadata, dict):
+        raise ValueError("data/metadata.json must contain a JSON object.")
+
+    print(f"Loaded metadata records: {len(metadata)}")
+    return metadata
+
+
+def build_index_record(image_path, root_dir=ROOT_DIR, metadata=None):
     """Build one data/index.json record for a valid wallpaper path."""
     root_path = Path(root_dir)
     wallpaper_date = parse_date_from_filename(image_path, root_path)
     if wallpaper_date is None:
         raise ValueError(f"Invalid wallpaper path: {relative_path(image_path, root_path)}")
 
+    metadata_by_date = metadata or {}
+    date_key = wallpaper_date.isoformat()
+    metadata_record = metadata_by_date.get(date_key, {})
+    title = metadata_record.get("title", "") if isinstance(metadata_record, dict) else ""
+    copyright_text = (
+        metadata_record.get("copyright", "") if isinstance(metadata_record, dict) else ""
+    )
+
     thumbnail_path = get_thumbnail_path(image_path, root_path)
     return {
-        "date": wallpaper_date.isoformat(),
-        "title": "",
-        "copyright": "",
+        "date": date_key,
+        "title": title if isinstance(title, str) else "",
+        "copyright": copyright_text if isinstance(copyright_text, str) else "",
         "image": relative_path(image_path, root_path),
         "thumbnail": relative_path(thumbnail_path, root_path),
     }
@@ -88,12 +121,13 @@ def build_index_record(image_path, root_dir=ROOT_DIR):
 def build_index_records(root_dir=ROOT_DIR):
     """Build sorted index records for local wallpaper files."""
     root_path = Path(root_dir)
+    metadata = load_metadata(root_path)
     records = []
     for image_path in find_wallpaper_images(root_path):
         thumbnail_path = get_thumbnail_path(image_path, root_path)
         if not thumbnail_path.exists():
             print(f"Warning: thumbnail not found for {relative_path(image_path, root_path)}")
-        records.append(build_index_record(image_path, root_path))
+        records.append(build_index_record(image_path, root_path, metadata))
 
     return sorted(records, key=lambda record: record["date"], reverse=True)
 
