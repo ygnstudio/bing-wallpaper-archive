@@ -1,39 +1,41 @@
 # Bing Wallpaper Archive
 
-Bing Wallpaper Archive is a GitHub-based automation project for archiving the daily Bing wallpaper in 1080P.
+## 项目简介
 
-## Current Status
+Bing Wallpaper Archive 是一个基于 GitHub 的自动化壁纸归档项目，用于保存每日 Bing 1080P 壁纸。
 
-This repository is currently in the v0.1.0 planning and scaffold stage.
+## 当前状态
 
-The project structure, placeholder scripts, data files, and GitHub Actions workflow are initialized, but the real wallpaper download, thumbnail generation, index generation, and README generation logic have not been implemented yet.
+当前项目处于 v0.1.0 项目骨架阶段。
 
-## Scope
+项目目录、占位脚本、数据文件和 GitHub Actions 工作流已经初始化，但真实的壁纸下载、缩略图生成、索引生成和 README 自动生成逻辑尚未实现。
 
-This project will:
+## 功能范围
 
-- Automatically fetch the daily Bing wallpaper.
-- Save only the 1080P image version.
-- Archive images by year and month.
-- Generate thumbnails for README previews.
-- Generate stable JSON index data.
-- Update README content through automation.
-- Run through GitHub Actions.
+本项目计划实现：
 
-## Boundaries
+- 自动获取每日 Bing 壁纸。
+- 只保存 1080P 图片版本。
+- 按年份和月份归档图片。
+- 为 README 预览生成缩略图。
+- 生成稳定的 JSON 索引数据。
+- 通过自动化脚本更新 README。
+- 通过 GitHub Actions 定时运行。
 
-This project will not include:
+## 项目边界
 
-- UHD or 4K downloads.
-- Multi-resolution image management.
-- A database.
-- A complex frontend gallery.
-- Search.
-- User accounts.
-- Multi-region wallpaper sources.
-- Commercial features.
+本项目不会包含：
 
-## Directory Structure
+- UHD 或 4K 图片下载。
+- 多分辨率图片管理。
+- 数据库。
+- 复杂前端图库。
+- 搜索系统。
+- 用户账号。
+- 多地区壁纸源。
+- 商业化功能。
+
+## 目录结构
 
 ```text
 bing-wallpaper-archive/
@@ -58,19 +60,19 @@ bing-wallpaper-archive/
   project.json
 ```
 
-## Automation
+## 自动化说明
 
-The GitHub Actions workflow is defined in `.github/workflows/update.yml`.
+GitHub Actions 工作流定义在 `.github/workflows/update.yml`。
 
-It is designed to support both manual and scheduled runs. The current workflow calls the placeholder scripts in order:
+该工作流支持手动触发和定时触发。当前工作流会按顺序运行以下占位脚本：
 
-1. Download the daily 1080P wallpaper.
-2. Generate thumbnails.
-3. Generate `data/index.json`.
-4. Generate README content.
-5. Commit and push changes when files have changed.
+1. 下载每日 1080P 壁纸。
+2. 生成缩略图。
+3. 生成 `data/index.json`。
+4. 生成 README 内容。
+5. 如果文件发生变化，则提交并推送更新。
 
-The scripts are placeholders in v0.1.0 and intentionally do not perform real archive updates yet.
+v0.1.0 阶段的脚本只作为占位入口，暂时不会执行真实归档更新。
 
 ## License
 
