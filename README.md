@@ -17,10 +17,28 @@ v0.1.0
 当前阶段：
 
 ```text
-项目骨架初始化
+自动化归档脚本实现
 ```
 
-本阶段只完成目录结构、基础文件、数据文件和 GitHub Actions 骨架，不实现完整业务逻辑。
+---
+
+## 最新壁纸
+
+暂无壁纸记录。
+
+---
+
+## 最近壁纸
+
+暂无最近壁纸记录。
+
+---
+
+## 归档统计
+
+- 归档总数：0
+- 起始日期：暂无
+- 最新日期：暂无
 
 ---
 
@@ -50,7 +68,7 @@ v0.1.0
 - 用户登录。
 - 搜索系统。
 - 数据库。
-- 商业化功能。
+- 商业化。
 - 多人协作后台。
 - 多地区壁纸源。
 - 高级图片标签系统。
@@ -83,25 +101,32 @@ bing-wallpaper-archive/
     generate_readme.py
 
   wallpapers/
-    .gitkeep
+    YYYY/
+      MM/
+        YYYYMMDD.jpg
 
   thumbnails/
-    .gitkeep
+    YYYY/
+      MM/
+        YYYYMMDD.jpg
 
   README.md
   project.json
+  requirements.txt
 ```
 
 ---
 
 ## 自动化流程
 
-GitHub Actions 后续会按以下流程运行：
+GitHub Actions 按以下流程运行：
 
 ```text
 Checkout
 ↓
 设置 Python 环境
+↓
+安装依赖
 ↓
 下载 1080P 壁纸
 ↓
@@ -118,8 +143,6 @@ Commit
 Push
 ```
 
-当前阶段 workflow 只保留运行骨架。
-
 ---
 
 ## 数据文件
@@ -128,13 +151,7 @@ Push
 
 用于记录壁纸索引。
 
-当前初始化为空数组：
-
-```json
-[]
-```
-
-后续每条记录格式：
+每条记录格式：
 
 ```json
 {
@@ -149,12 +166,6 @@ Push
 ### `data/hash.json`
 
 用于记录图片 SHA256 哈希，避免重复保存。
-
-当前初始化为空对象：
-
-```json
-{}
-```
 
 ---
 
