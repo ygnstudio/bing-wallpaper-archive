@@ -1,8 +1,8 @@
 def main():
     """Entry point for generating data/index.json."""
-    # TODO: Scan the wallpapers directory.
+    # TODO: Scan wallpapers directory.
     # TODO: Build image metadata records.
-    # TODO: Match each image with its thumbnail path.
+    # TODO: Match image paths with thumbnail paths.
     # TODO: Write records to data/index.json.
     pass
 

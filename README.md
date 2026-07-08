@@ -1,39 +1,68 @@
 # Bing Wallpaper Archive
 
-## 项目简介
+Bing Wallpaper Archive 是一个个人自用的 Bing 壁纸自动归档项目。
 
-Bing Wallpaper Archive 是一个基于 GitHub 的自动化壁纸归档项目，用于保存每日 Bing 1080P 壁纸。
+项目会自动归档每日 Bing 1080P 壁纸，并生成缩略图、索引数据和 README 展示内容。后续该项目会接入 `ygnstudio.github.io`，作为雁归南 Studio 官网中的一个项目展示内容。
+
+---
 
 ## 当前状态
 
-当前项目处于 v0.1.0 项目骨架阶段。
+当前版本：
 
-项目目录、占位脚本、数据文件和 GitHub Actions 工作流已经初始化，但真实的壁纸下载、缩略图生成、索引生成和 README 自动生成逻辑尚未实现。
+```text
+v0.1.0
+```
+
+当前阶段：
+
+```text
+项目骨架初始化
+```
+
+本阶段只完成目录结构、基础文件、数据文件和 GitHub Actions 骨架，不实现完整业务逻辑。
+
+---
 
 ## 功能范围
 
-本项目计划实现：
+本项目包含：
 
-- 自动获取每日 Bing 壁纸。
-- 只保存 1080P 图片版本。
-- 按年份和月份归档图片。
-- 为 README 预览生成缩略图。
-- 生成稳定的 JSON 索引数据。
-- 通过自动化脚本更新 README。
-- 通过 GitHub Actions 定时运行。
+- 每日自动获取 Bing 1080P 壁纸。
+- 按年月归档图片。
+- 生成缩略图。
+- 生成 `data/index.json`。
+- 使用 `data/hash.json` 做去重。
+- 自动更新 README。
+- 使用 GitHub Actions 定时运行。
+- 后续接入个人官网展示。
+
+---
 
 ## 项目边界
 
-本项目不会包含：
+本项目长期不包含以下内容：
 
-- UHD 或 4K 图片下载。
-- 多分辨率图片管理。
-- 数据库。
+- UHD / 4K 版本保存。
+- 多分辨率版本管理。
 - 复杂前端图库。
+- 多语言站点。
+- 用户登录。
 - 搜索系统。
-- 用户账号。
-- 多地区壁纸源。
+- 数据库。
 - 商业化功能。
+- 多人协作后台。
+- 多地区壁纸源。
+- 高级图片标签系统。
+
+保留这些边界的原因：
+
+- 项目主要服务于个人自动归档需求。
+- 只保存 1080P 版本，降低仓库体积和维护成本。
+- 展示需求由 README 和未来的个人官网承担。
+- 不引入数据库、登录、多用户等会显著增加复杂度的功能。
+
+---
 
 ## 目录结构
 
@@ -43,6 +72,10 @@ bing-wallpaper-archive/
     workflows/
       update.yml
 
+  data/
+    index.json
+    hash.json
+
   scripts/
     download.py
     generate_thumbnail.py
@@ -50,29 +83,80 @@ bing-wallpaper-archive/
     generate_readme.py
 
   wallpapers/
-  thumbnails/
+    .gitkeep
 
-  data/
-    index.json
-    hash.json
+  thumbnails/
+    .gitkeep
 
   README.md
   project.json
 ```
 
-## 自动化说明
+---
 
-GitHub Actions 工作流定义在 `.github/workflows/update.yml`。
+## 自动化流程
 
-该工作流支持手动触发和定时触发。当前工作流会按顺序运行以下占位脚本：
+GitHub Actions 后续会按以下流程运行：
 
-1. 下载每日 1080P 壁纸。
-2. 生成缩略图。
-3. 生成 `data/index.json`。
-4. 生成 README 内容。
-5. 如果文件发生变化，则提交并推送更新。
+```text
+Checkout
+↓
+设置 Python 环境
+↓
+下载 1080P 壁纸
+↓
+生成缩略图
+↓
+更新 index.json
+↓
+更新 README
+↓
+检测变更
+↓
+Commit
+↓
+Push
+```
 
-v0.1.0 阶段的脚本只作为占位入口，暂时不会执行真实归档更新。
+当前阶段 workflow 只保留运行骨架。
+
+---
+
+## 数据文件
+
+### `data/index.json`
+
+用于记录壁纸索引。
+
+当前初始化为空数组：
+
+```json
+[]
+```
+
+后续每条记录格式：
+
+```json
+{
+  "date": "2026-07-08",
+  "title": "",
+  "copyright": "",
+  "image": "wallpapers/2026/07/20260708.jpg",
+  "thumbnail": "thumbnails/2026/07/20260708.jpg"
+}
+```
+
+### `data/hash.json`
+
+用于记录图片 SHA256 哈希，避免重复保存。
+
+当前初始化为空对象：
+
+```json
+{}
+```
+
+---
 
 ## License
 

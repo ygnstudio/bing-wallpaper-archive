@@ -1,9 +1,9 @@
 def main():
     """Entry point for generating thumbnails."""
-    # TODO: Scan the wallpapers directory.
-    # TODO: Generate thumbnails from archived 1080P images.
+    # TODO: Scan wallpapers directory.
+    # TODO: Generate thumbnails for 1080P wallpaper images.
     # TODO: Save thumbnails to thumbnails/YYYY/MM/YYYYMMDD.jpg.
-    # TODO: Skip thumbnails that already exist.
+    # TODO: Skip existing thumbnails.
     pass
 
 
