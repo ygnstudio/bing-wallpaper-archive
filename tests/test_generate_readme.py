@@ -89,16 +89,16 @@ class GenerateReadmeScriptTest(unittest.TestCase):
         content = generate_readme.build_readme([])
 
         self.assertIn("# Bing Wallpaper Archive", content)
+        self.assertIn("中文 | [English](README.en.md)", content)
         self.assertIn("## 最新壁纸\n\n暂无壁纸记录。", content)
         self.assertIn("## 最近壁纸\n\n暂无最近壁纸记录。", content)
-        self.assertIn("归档总数：0", content)
-        self.assertIn("起始日期：暂无", content)
-        self.assertIn("最新日期：暂无", content)
-        self.assertIn("## 功能范围", content)
-        self.assertIn("## 项目边界", content)
-        self.assertIn("## 目录结构", content)
-        self.assertIn("## 自动化流程", content)
-        self.assertIn("## 数据文件", content)
+        self.assertIn("- 图片: 0", content)
+        self.assertIn("- 缩略图: 0", content)
+        self.assertIn("- 日期范围: 暂无 - 暂无", content)
+        self.assertIn("## 维护", content)
+        self.assertIn("## 数据", content)
+        self.assertNotIn("## 项目边界", content)
+        self.assertNotIn("## 自动化流程", content)
 
     def test_build_readme_with_one_record_has_latest_wallpaper(self):
         records = [self._record("2026-07-08")]
@@ -112,9 +112,23 @@ class GenerateReadmeScriptTest(unittest.TestCase):
             content,
         )
         self.assertNotIn("%2F", content)
-        self.assertIn("归档总数：1", content)
-        self.assertIn("起始日期：2026-07-08", content)
-        self.assertIn("最新日期：2026-07-08", content)
+        self.assertIn("- 图片: 1", content)
+        self.assertIn("- 缩略图: 1", content)
+        self.assertIn("- Metadata 记录: 1", content)
+        self.assertIn("- 日期范围: 2026-07-08 - 2026-07-08", content)
+
+    def test_build_english_readme_has_language_link_and_status(self):
+        records = [self._record("2026-07-08")]
+
+        content = generate_readme.build_readme(records, language="en")
+
+        self.assertIn("[中文](README.md) | English", content)
+        self.assertIn("## Latest Wallpaper", content)
+        self.assertIn("**Date:** 2026-07-08", content)
+        self.assertIn("- Images: 1", content)
+        self.assertIn("- Thumbnails: 1", content)
+        self.assertIn("## Maintenance", content)
+        self.assertIn("## Data", content)
 
     def test_recent_wallpapers_are_limited_to_12_records(self):
         records = [self._record(f"2026-07-{day:02d}") for day in range(20, 5, -1)]
@@ -151,6 +165,11 @@ class GenerateReadmeScriptTest(unittest.TestCase):
 
             self.assertEqual(hash_path.read_text(encoding="utf-8"), '{"abc": {"path": "x"}}\n')
             self.assertTrue((root_dir / "README.md").read_text(encoding="utf-8").endswith("\n"))
+            self.assertTrue((root_dir / "README.en.md").read_text(encoding="utf-8").endswith("\n"))
+            self.assertIn(
+                "## Latest Wallpaper",
+                (root_dir / "README.en.md").read_text(encoding="utf-8"),
+            )
 
     def _record(self, date_text):
         compact_date = date_text.replace("-", "")

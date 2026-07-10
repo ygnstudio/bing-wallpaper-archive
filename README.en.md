@@ -1,37 +1,37 @@
 # Bing Wallpaper Archive
 
-中文 | [English](README.en.md)
+[中文](README.md) | English
 
-Bing Wallpaper Archive 是一个个人自用的 Bing 1080P 壁纸自动归档项目。它保存原图、缩略图、metadata 和索引数据，并通过 GitHub Actions 每日更新。
-
----
-
-## 状态
-
-- 状态: Active
-- 版本: v0.2.1
-- 图片: 1001
-- 缩略图: 1001
-- Metadata 记录: 1001
-- 日期范围: 2023-05-01 - 2026-07-09
+Bing Wallpaper Archive is a personal archive for daily Bing 1080P wallpapers. It stores original images, thumbnails, metadata, and an index, then updates through GitHub Actions.
 
 ---
 
-## 最新壁纸
+## Status
 
-**日期：** 2026-07-09
+- Status: Active
+- Version: v0.2.1
+- Images: 1001
+- Thumbnails: 1001
+- Metadata records: 1001
+- Date range: 2023-05-01 - 2026-07-09
 
-**标题：** 陆地与海洋的鸟瞰图
+---
 
-**版权：** 陆地与海洋的鸟瞰图，维多利亚州，澳大利亚 (© Nearmap/Getty Images)
+## Latest Wallpaper
+
+**Date:** 2026-07-09
+
+**Title:** 陆地与海洋的鸟瞰图
+
+**Copyright:** 陆地与海洋的鸟瞰图，维多利亚州，澳大利亚 (© Nearmap/Getty Images)
 
 [![2026-07-09](thumbnails/2026/07/20260709.jpg)](wallpapers/2026/07/20260709.jpg)
 
 ---
 
-## 最近壁纸
+## Recent Wallpapers
 
-| 日期 | 预览 |
+| Date | Preview |
 |---|---|
 | 2026-07-09 | [![2026-07-09](thumbnails/2026/07/20260709.jpg)](wallpapers/2026/07/20260709.jpg) |
 | 2026-07-08 | [![2026-07-08](thumbnails/2026/07/20260708.jpg)](wallpapers/2026/07/20260708.jpg) |
@@ -48,30 +48,30 @@ Bing Wallpaper Archive 是一个个人自用的 Bing 1080P 壁纸自动归档项
 
 ---
 
-## 维护
+## Maintenance
 
-当前保留的长期功能：
+Current maintained features:
 
-- 每日下载 Bing 1080P 壁纸
-- 生成缩略图
-- 保存 metadata、hash 和 index
-- 自动生成 README
-- 检查归档完整性
+- Daily Bing 1080P wallpaper download
+- Thumbnail generation
+- Metadata, hash, and index storage
+- README generation
+- Archive integrity checking
 
-历史迁移工具已在归档完成后移除。
+Historical migration tools were removed after archive completion.
 
 ---
 
-## 数据
+## Data
 
-- 原图：`wallpapers/YYYY/MM/YYYYMMDD.jpg`
-- 缩略图：`thumbnails/YYYY/MM/YYYYMMDD.jpg`
-- 索引：`data/index.json`
-- Hash 记录：`data/hash.json`
-- Metadata 记录：`data/metadata.json`
-- 健康检查报告：`reports/archive_check.md`
+- Original images: `wallpapers/YYYY/MM/YYYYMMDD.jpg`
+- Thumbnails: `thumbnails/YYYY/MM/YYYYMMDD.jpg`
+- Index: `data/index.json`
+- Hash records: `data/hash.json`
+- Metadata records: `data/metadata.json`
+- Health report: `reports/archive_check.md`
 
-本地验证：
+Run locally:
 
 ```bash
 python3 -m unittest discover -s tests -v

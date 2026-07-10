@@ -7,7 +7,9 @@ from pathlib import Path
 ROOT_DIR = Path(__file__).resolve().parents[1]
 INDEX_FILE = ROOT_DIR / "data" / "index.json"
 README_FILE = ROOT_DIR / "README.md"
+README_EN_FILE = ROOT_DIR / "README.en.md"
 MAX_RECENT_WALLPAPERS = 12
+PROJECT_VERSION = "v0.2.1"
 
 
 def load_index_records(root_dir=ROOT_DIR):
@@ -84,21 +86,22 @@ def is_valid_relative_posix_path(value):
     return True
 
 
-def build_latest_section(records):
+def build_latest_section(records, language="zh"):
     """Build the latest wallpaper README section."""
+    labels = labels_for(language)
     if not records:
-        return "## 最新壁纸\n\n暂无壁纸记录。"
+        return f"## {labels['latest_heading']}\n\n{labels['empty_latest']}"
 
     latest = records[0]
     lines = [
-        "## 最新壁纸",
+        f"## {labels['latest_heading']}",
         "",
-        f"**日期：** {latest['date']}",
+        f"**{labels['date']}** {latest['date']}",
     ]
     if latest["title"]:
-        lines.extend(["", f"**标题：** {latest['title']}"])
+        lines.extend(["", f"**{labels['title']}** {latest['title']}"])
     if latest["copyright"]:
-        lines.extend(["", f"**版权：** {latest['copyright']}"])
+        lines.extend(["", f"**{labels['copyright']}** {latest['copyright']}"])
     lines.extend(
         [
             "",
@@ -108,15 +111,16 @@ def build_latest_section(records):
     return "\n".join(lines)
 
 
-def build_recent_section(records):
+def build_recent_section(records, language="zh"):
     """Build a table with at most 12 recent wallpapers."""
+    labels = labels_for(language)
     if not records:
-        return "## 最近壁纸\n\n暂无最近壁纸记录。"
+        return f"## {labels['recent_heading']}\n\n{labels['empty_recent']}"
 
     lines = [
-        "## 最近壁纸",
+        f"## {labels['recent_heading']}",
         "",
-        "| 日期 | 预览 |",
+        f"| {labels['date_column']} | {labels['preview_column']} |",
         "|---|---|",
     ]
     for record in records[:MAX_RECENT_WALLPAPERS]:
@@ -124,12 +128,13 @@ def build_recent_section(records):
     return "\n".join(lines)
 
 
-def build_stats_section(records):
+def build_stats_section(records, language="zh"):
     """Build archive statistics from validated records."""
+    labels = labels_for(language)
     if not records:
         total = 0
-        start_date = "暂无"
-        latest_date = "暂无"
+        start_date = labels["none"]
+        latest_date = labels["none"]
     else:
         dates = [record["date"] for record in records]
         total = len(records)
@@ -138,11 +143,14 @@ def build_stats_section(records):
 
     return "\n".join(
         [
-            "## 归档统计",
+            f"## {labels['status_heading']}",
             "",
-            f"- 归档总数：{total}",
-            f"- 起始日期：{start_date}",
-            f"- 最新日期：{latest_date}",
+            f"- {labels['status']}: Active",
+            f"- {labels['version']}: {PROJECT_VERSION}",
+            f"- {labels['images']}: {total}",
+            f"- {labels['thumbnails']}: {total}",
+            f"- {labels['metadata_records']}: {total}",
+            f"- {labels['date_range']}: {start_date} - {latest_date}",
         ]
     )
 
@@ -153,221 +161,180 @@ def build_image_link(record):
     return f"[![{date_text}]({record['thumbnail']})]({record['image']})"
 
 
-def build_readme(records):
+def build_readme(records, language="zh"):
     """Build the full README content from validated index records."""
     sections = [
-        build_intro_section(),
-        build_status_section(),
-        build_latest_section(records),
-        build_recent_section(records),
-        build_stats_section(records),
-        build_scope_section(),
-        build_boundaries_section(),
-        build_directory_section(),
-        build_automation_section(),
-        build_data_files_section(),
+        build_intro_section(language),
+        build_stats_section(records, language),
+        build_latest_section(records, language),
+        build_recent_section(records, language),
+        build_maintenance_section(language),
+        build_data_files_section(language),
         "## License\n\nMIT",
     ]
     return "\n\n---\n\n".join(sections)
 
 
-def build_intro_section():
+def build_intro_section(language="zh"):
     """Build the README introduction."""
+    if language == "en":
+        return "\n\n".join(
+            [
+                "# Bing Wallpaper Archive",
+                "[中文](README.md) | English",
+                (
+                    "Bing Wallpaper Archive is a personal archive for daily Bing 1080P "
+                    "wallpapers. It stores original images, thumbnails, metadata, and an "
+                    "index, then updates through GitHub Actions."
+                ),
+            ]
+        )
+
     return "\n\n".join(
         [
             "# Bing Wallpaper Archive",
-            "Bing Wallpaper Archive 是一个个人自用的 Bing 壁纸自动归档项目。",
+            "中文 | [English](README.en.md)",
             (
-                "项目会自动归档每日 Bing 1080P 壁纸，并生成缩略图、索引数据和 README "
-                "展示内容。后续该项目会接入 `ygnstudio.github.io`，作为雁归南 Studio "
-                "官网中的一个项目展示内容。"
+                "Bing Wallpaper Archive 是一个个人自用的 Bing 1080P 壁纸自动归档项目。"
+                "它保存原图、缩略图、metadata 和索引数据，并通过 GitHub Actions 每日更新。"
             ),
         ]
     )
 
 
-def build_status_section():
-    """Build the current status section."""
+def build_maintenance_section(language="zh"):
+    """Build the long-term maintenance section."""
+    if language == "en":
+        return "\n".join(
+            [
+                "## Maintenance",
+                "",
+                "Current maintained features:",
+                "",
+                "- Daily Bing 1080P wallpaper download",
+                "- Thumbnail generation",
+                "- Metadata, hash, and index storage",
+                "- README generation",
+                "- Archive integrity checking",
+                "",
+                "Historical migration tools were removed after archive completion.",
+            ]
+        )
+
     return "\n".join(
         [
-            "## 当前状态",
+            "## 维护",
             "",
-            "当前版本：",
+            "当前保留的长期功能：",
             "",
-            "```text",
-            "v0.1.0",
-            "```",
+            "- 每日下载 Bing 1080P 壁纸",
+            "- 生成缩略图",
+            "- 保存 metadata、hash 和 index",
+            "- 自动生成 README",
+            "- 检查归档完整性",
             "",
-            "当前阶段：",
-            "",
-            "```text",
-            "自动化归档脚本实现",
-            "```",
+            "历史迁移工具已在归档完成后移除。",
         ]
     )
 
 
-def build_scope_section():
-    """Build the project scope section."""
-    return "\n".join(
-        [
-            "## 功能范围",
-            "",
-            "本项目包含：",
-            "",
-            "- 每日自动获取 Bing 1080P 壁纸。",
-            "- 按年月归档图片。",
-            "- 生成缩略图。",
-            "- 生成 `data/index.json`。",
-            "- 使用 `data/hash.json` 做去重。",
-            "- 自动更新 README。",
-            "- 使用 GitHub Actions 定时运行。",
-            "- 后续接入个人官网展示。",
-        ]
-    )
-
-
-def build_boundaries_section():
-    """Build the project boundaries section."""
-    return "\n".join(
-        [
-            "## 项目边界",
-            "",
-            "本项目长期不包含以下内容：",
-            "",
-            "- UHD / 4K 版本保存。",
-            "- 多分辨率版本管理。",
-            "- 复杂前端图库。",
-            "- 多语言站点。",
-            "- 用户登录。",
-            "- 搜索系统。",
-            "- 数据库。",
-            "- 商业化。",
-            "- 多人协作后台。",
-            "- 多地区壁纸源。",
-            "- 高级图片标签系统。",
-            "",
-            "保留这些边界的原因：",
-            "",
-            "- 项目主要服务于个人自动归档需求。",
-            "- 只保存 1080P 版本，降低仓库体积和维护成本。",
-            "- 展示需求由 README 和未来的个人官网承担。",
-            "- 不引入数据库、登录、多用户等会显著增加复杂度的功能。",
-        ]
-    )
-
-
-def build_directory_section():
-    """Build the directory structure section."""
-    return "\n".join(
-        [
-            "## 目录结构",
-            "",
-            "```text",
-            "bing-wallpaper-archive/",
-            "  .github/",
-            "    workflows/",
-            "      update.yml",
-            "",
-            "  data/",
-            "    index.json",
-            "    hash.json",
-            "",
-            "  scripts/",
-            "    download.py",
-            "    generate_thumbnail.py",
-            "    generate_index.py",
-            "    generate_readme.py",
-            "",
-            "  wallpapers/",
-            "    YYYY/",
-            "      MM/",
-            "        YYYYMMDD.jpg",
-            "",
-            "  thumbnails/",
-            "    YYYY/",
-            "      MM/",
-            "        YYYYMMDD.jpg",
-            "",
-            "  README.md",
-            "  project.json",
-            "  requirements.txt",
-            "```",
-        ]
-    )
-
-
-def build_automation_section():
-    """Build the automation flow section."""
-    return "\n".join(
-        [
-            "## 自动化流程",
-            "",
-            "GitHub Actions 按以下流程运行：",
-            "",
-            "```text",
-            "Checkout",
-            "↓",
-            "设置 Python 环境",
-            "↓",
-            "安装依赖",
-            "↓",
-            "下载 1080P 壁纸",
-            "↓",
-            "生成缩略图",
-            "↓",
-            "更新 index.json",
-            "↓",
-            "更新 README",
-            "↓",
-            "检测变更",
-            "↓",
-            "Commit",
-            "↓",
-            "Push",
-            "```",
-        ]
-    )
-
-
-def build_data_files_section():
+def build_data_files_section(language="zh"):
     """Build the data files section."""
+    if language == "en":
+        return "\n".join(
+            [
+                "## Data",
+                "",
+                "- Original images: `wallpapers/YYYY/MM/YYYYMMDD.jpg`",
+                "- Thumbnails: `thumbnails/YYYY/MM/YYYYMMDD.jpg`",
+                "- Index: `data/index.json`",
+                "- Hash records: `data/hash.json`",
+                "- Metadata records: `data/metadata.json`",
+                "- Health report: `reports/archive_check.md`",
+                "",
+                "Run locally:",
+                "",
+                "```bash",
+                "python3 -m unittest discover -s tests -v",
+                "python3 scripts/check_archive.py",
+                "```",
+            ]
+        )
+
     return "\n".join(
         [
-            "## 数据文件",
+            "## 数据",
             "",
-            "### `data/index.json`",
+            "- 原图：`wallpapers/YYYY/MM/YYYYMMDD.jpg`",
+            "- 缩略图：`thumbnails/YYYY/MM/YYYYMMDD.jpg`",
+            "- 索引：`data/index.json`",
+            "- Hash 记录：`data/hash.json`",
+            "- Metadata 记录：`data/metadata.json`",
+            "- 健康检查报告：`reports/archive_check.md`",
             "",
-            "用于记录壁纸索引。",
+            "本地验证：",
             "",
-            "每条记录格式：",
-            "",
-            "```json",
-            "{",
-            '  "date": "2026-07-08",',
-            '  "title": "",',
-            '  "copyright": "",',
-            '  "image": "wallpapers/2026/07/20260708.jpg",',
-            '  "thumbnail": "thumbnails/2026/07/20260708.jpg"',
-            "}",
+            "```bash",
+            "python3 -m unittest discover -s tests -v",
+            "python3 scripts/check_archive.py",
             "```",
-            "",
-            "### `data/hash.json`",
-            "",
-            "用于记录图片 SHA256 哈希，避免重复保存。",
         ]
     )
 
 
-def write_readme(content, root_dir=ROOT_DIR):
-    """Write README.md with UTF-8 encoding and a final newline."""
-    readme_path = Path(root_dir) / "README.md"
+def labels_for(language):
+    """Return labels for README generation."""
+    if language == "en":
+        return {
+            "latest_heading": "Latest Wallpaper",
+            "recent_heading": "Recent Wallpapers",
+            "status_heading": "Status",
+            "empty_latest": "No wallpaper records yet.",
+            "empty_recent": "No recent wallpaper records yet.",
+            "date": "Date:",
+            "title": "Title:",
+            "copyright": "Copyright:",
+            "date_column": "Date",
+            "preview_column": "Preview",
+            "none": "N/A",
+            "status": "Status",
+            "version": "Version",
+            "images": "Images",
+            "thumbnails": "Thumbnails",
+            "metadata_records": "Metadata records",
+            "date_range": "Date range",
+        }
+
+    return {
+        "latest_heading": "最新壁纸",
+        "recent_heading": "最近壁纸",
+        "status_heading": "状态",
+        "empty_latest": "暂无壁纸记录。",
+        "empty_recent": "暂无最近壁纸记录。",
+        "date": "日期：",
+        "title": "标题：",
+        "copyright": "版权：",
+        "date_column": "日期",
+        "preview_column": "预览",
+        "none": "暂无",
+        "status": "状态",
+        "version": "版本",
+        "images": "图片",
+        "thumbnails": "缩略图",
+        "metadata_records": "Metadata 记录",
+        "date_range": "日期范围",
+    }
+
+
+def write_readme(content, root_dir=ROOT_DIR, filename="README.md"):
+    """Write a README file with UTF-8 encoding and a final newline."""
+    readme_path = Path(root_dir) / filename
     readme_path.write_text(content.rstrip() + "\n", encoding="utf-8")
     return readme_path
 
 
 def generate_readme(root_dir=ROOT_DIR):
-    """Generate README.md from data/index.json."""
+    """Generate Chinese and English README files from data/index.json."""
     root_path = Path(root_dir)
     raw_records = load_index_records(root_path)
     records = validate_records(raw_records)
@@ -376,9 +343,10 @@ def generate_readme(root_dir=ROOT_DIR):
     else:
         print("No wallpaper records found.")
 
-    content = build_readme(records)
-    write_readme(content, root_path)
+    write_readme(build_readme(records, language="zh"), root_path, "README.md")
+    write_readme(build_readme(records, language="en"), root_path, "README.en.md")
     print("Generated README.md")
+    print("Generated README.en.md")
     return records
 
 
