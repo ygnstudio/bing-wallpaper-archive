@@ -1,6 +1,19 @@
-__pycache__/
+# Python
+**pycache**/
+**/__pycache__/
+*.pyc
 *.py[cod]
+
+# macOS
+.DS_Store
+
+# Test
+.coverage
+
+# Temporary
+*.tmp
+
+# Local
+.env
 .venv/
 venv/
-.env
-.DS_Store

@@ -22,6 +22,20 @@ v0.2.1
 
 ---
 
+## Status
+
+Active
+
+This project automatically archives daily Bing 1080P wallpapers.
+
+Current archive:
+
+- Images: 1001
+- Thumbnails: 1001
+- Metadata records: 1001
+
+---
+
 ## 最新壁纸
 
 **日期：** 2026-07-09
@@ -148,8 +162,12 @@ bing-wallpaper-archive/
         YYYYMMDD.jpg
 
   README.md
+  LICENSE
+  CHANGELOG.md
   project.json
   requirements.txt
+  .gitignore
+  .python-version
 ```
 
 ---
