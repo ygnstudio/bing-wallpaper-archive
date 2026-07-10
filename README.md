@@ -11,13 +11,13 @@ Bing Wallpaper Archive 是一个个人自用的 Bing 壁纸自动归档项目。
 当前版本：
 
 ```text
-v0.1.0
+v0.2.1
 ```
 
 当前阶段：
 
 ```text
-自动化归档脚本实现
+长期维护
 ```
 
 ---
@@ -71,8 +71,24 @@ v0.1.0
 - 生成 `data/index.json`。
 - 使用 `data/hash.json` 做去重。
 - 自动更新 README。
+- 检查归档完整性。
 - 使用 GitHub Actions 定时运行。
 - 后续接入个人官网展示。
+
+---
+
+## Maintenance
+
+Historical migration tools have been removed after archive completion.
+
+Current maintained features:
+
+- Daily Bing wallpaper download
+- Thumbnail generation
+- Metadata storage
+- Index generation
+- README generation
+- Archive integrity checking
 
 ---
 
@@ -112,12 +128,14 @@ bing-wallpaper-archive/
   data/
     index.json
     hash.json
+    metadata.json
 
   scripts/
     download.py
     generate_thumbnail.py
     generate_index.py
     generate_readme.py
+    check_archive.py
 
   wallpapers/
     YYYY/

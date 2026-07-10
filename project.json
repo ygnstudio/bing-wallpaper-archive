@@ -2,8 +2,8 @@
   "name": "Bing Wallpaper Archive",
   "slug": "bing-wallpaper-archive",
   "description": "Automatically archive daily 1080P Bing wallpapers with metadata, thumbnails and README previews.",
-  "status": "planning",
-  "version": "v0.1.0",
+  "status": "active",
+  "version": "v0.2.1",
   "github": "https://github.com/ygnstudio/bing-wallpaper-archive",
   "website": "",
   "tags": [
