@@ -10,22 +10,22 @@ Bing Wallpaper Archive is a personal archive for daily Bing 1080P wallpapers. It
 
 - Status: Active
 - Version: v0.2.1
-- Images: 1001
-- Thumbnails: 1001
-- Metadata records: 1001
-- Date range: 2023-05-01 - 2026-07-09
+- Images: 1002
+- Thumbnails: 1002
+- Metadata records: 1002
+- Date range: 2023-05-01 - 2026-07-10
 
 ---
 
 ## Latest Wallpaper
 
-**Date:** 2026-07-09
+**Date:** 2026-07-10
 
-**Title:** 陆地与海洋的鸟瞰图
+**Title:** 布列塔尼的潮汐之约
 
-**Copyright:** 陆地与海洋的鸟瞰图，维多利亚州，澳大利亚 (© Nearmap/Getty Images)
+**Copyright:** 圣古斯坦港, 欧赖, 布列塔尼, 法国 (© Rolf E. Staerk/Shutterstock)
 
-[![2026-07-09](thumbnails/2026/07/20260709.jpg)](wallpapers/2026/07/20260709.jpg)
+[![2026-07-10](thumbnails/2026/07/20260710.jpg)](wallpapers/2026/07/20260710.jpg)
 
 ---
 
@@ -33,6 +33,7 @@ Bing Wallpaper Archive is a personal archive for daily Bing 1080P wallpapers. It
 
 | Date | Preview |
 |---|---|
+| 2026-07-10 | [![2026-07-10](thumbnails/2026/07/20260710.jpg)](wallpapers/2026/07/20260710.jpg) |
 | 2026-07-09 | [![2026-07-09](thumbnails/2026/07/20260709.jpg)](wallpapers/2026/07/20260709.jpg) |
 | 2026-07-08 | [![2026-07-08](thumbnails/2026/07/20260708.jpg)](wallpapers/2026/07/20260708.jpg) |
 | 2026-07-07 | [![2026-07-07](thumbnails/2026/07/20260707.jpg)](wallpapers/2026/07/20260707.jpg) |
@@ -44,7 +45,6 @@ Bing Wallpaper Archive is a personal archive for daily Bing 1080P wallpapers. It
 | 2026-01-23 | [![2026-01-23](thumbnails/2026/01/20260123.jpg)](wallpapers/2026/01/20260123.jpg) |
 | 2026-01-22 | [![2026-01-22](thumbnails/2026/01/20260122.jpg)](wallpapers/2026/01/20260122.jpg) |
 | 2026-01-21 | [![2026-01-21](thumbnails/2026/01/20260121.jpg)](wallpapers/2026/01/20260121.jpg) |
-| 2026-01-20 | [![2026-01-20](thumbnails/2026/01/20260120.jpg)](wallpapers/2026/01/20260120.jpg) |
 
 ---
 
