@@ -10,22 +10,22 @@ Bing Wallpaper Archive is a personal archive for daily Bing 1080P wallpapers. It
 
 - Status: Active
 - Version: v0.2.1
-- Images: 1005
-- Thumbnails: 1005
-- Metadata records: 1005
-- Date range: 2023-05-01 - 2026-07-13
+- Images: 1006
+- Thumbnails: 1006
+- Metadata records: 1006
+- Date range: 2023-05-01 - 2026-07-14
 
 ---
 
 ## Latest Wallpaper
 
-**Date:** 2026-07-13
+**Date:** 2026-07-14
 
-**Title:** 奇妙的真相
+**Title:** 攀登后的奖励
 
-**Copyright:** 柠檬鲨幼崽在红树林中，伊柳塞拉岛，巴哈马 (© Shane Gross/Nature Picture Library)
+**Copyright:** 玛丽湖，约翰·缪尔荒野（毕晓普附近），加利福尼亚州，美国 (© Steve Dunleavy/Getty Images)
 
-[![2026-07-13](thumbnails/2026/07/20260713.jpg)](wallpapers/2026/07/20260713.jpg)
+[![2026-07-14](thumbnails/2026/07/20260714.jpg)](wallpapers/2026/07/20260714.jpg)
 
 ---
 
@@ -33,6 +33,7 @@ Bing Wallpaper Archive is a personal archive for daily Bing 1080P wallpapers. It
 
 | Date | Preview |
 |---|---|
+| 2026-07-14 | [![2026-07-14](thumbnails/2026/07/20260714.jpg)](wallpapers/2026/07/20260714.jpg) |
 | 2026-07-13 | [![2026-07-13](thumbnails/2026/07/20260713.jpg)](wallpapers/2026/07/20260713.jpg) |
 | 2026-07-12 | [![2026-07-12](thumbnails/2026/07/20260712.jpg)](wallpapers/2026/07/20260712.jpg) |
 | 2026-07-11 | [![2026-07-11](thumbnails/2026/07/20260711.jpg)](wallpapers/2026/07/20260711.jpg) |
@@ -44,7 +45,6 @@ Bing Wallpaper Archive is a personal archive for daily Bing 1080P wallpapers. It
 | 2026-01-27 | [![2026-01-27](thumbnails/2026/01/20260127.jpg)](wallpapers/2026/01/20260127.jpg) |
 | 2026-01-26 | [![2026-01-26](thumbnails/2026/01/20260126.jpg)](wallpapers/2026/01/20260126.jpg) |
 | 2026-01-25 | [![2026-01-25](thumbnails/2026/01/20260125.jpg)](wallpapers/2026/01/20260125.jpg) |
-| 2026-01-24 | [![2026-01-24](thumbnails/2026/01/20260124.jpg)](wallpapers/2026/01/20260124.jpg) |
 
 ---
 
