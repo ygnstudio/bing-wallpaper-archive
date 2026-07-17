@@ -10,22 +10,22 @@ Bing Wallpaper Archive is a personal archive for daily Bing 1080P wallpapers. It
 
 - Status: Active
 - Version: v0.2.1
-- Images: 1008
-- Thumbnails: 1008
-- Metadata records: 1008
-- Date range: 2023-05-01 - 2026-07-16
+- Images: 1009
+- Thumbnails: 1009
+- Metadata records: 1009
+- Date range: 2023-05-01 - 2026-07-17
 
 ---
 
 ## Latest Wallpaper
 
-**Date:** 2026-07-16
+**Date:** 2026-07-17
 
-**Title:** 希腊式的逃离
+**Title:** 环影圆成
 
-**Copyright:** 瓦伊海滩上的日光浴躺椅，克里特岛，希腊 (© borchee/Getty Images)
+**Copyright:** 恶魔桥在克罗姆劳杜鹃花公园，萨克森州，德国 (© Mike Mareen/Getty Images)
 
-[![2026-07-16](thumbnails/2026/07/20260716.jpg)](wallpapers/2026/07/20260716.jpg)
+[![2026-07-17](thumbnails/2026/07/20260717.jpg)](wallpapers/2026/07/20260717.jpg)
 
 ---
 
@@ -33,6 +33,7 @@ Bing Wallpaper Archive is a personal archive for daily Bing 1080P wallpapers. It
 
 | Date | Preview |
 |---|---|
+| 2026-07-17 | [![2026-07-17](thumbnails/2026/07/20260717.jpg)](wallpapers/2026/07/20260717.jpg) |
 | 2026-07-16 | [![2026-07-16](thumbnails/2026/07/20260716.jpg)](wallpapers/2026/07/20260716.jpg) |
 | 2026-07-15 | [![2026-07-15](thumbnails/2026/07/20260715.jpg)](wallpapers/2026/07/20260715.jpg) |
 | 2026-07-14 | [![2026-07-14](thumbnails/2026/07/20260714.jpg)](wallpapers/2026/07/20260714.jpg) |
@@ -44,7 +45,6 @@ Bing Wallpaper Archive is a personal archive for daily Bing 1080P wallpapers. It
 | 2026-07-08 | [![2026-07-08](thumbnails/2026/07/20260708.jpg)](wallpapers/2026/07/20260708.jpg) |
 | 2026-07-07 | [![2026-07-07](thumbnails/2026/07/20260707.jpg)](wallpapers/2026/07/20260707.jpg) |
 | 2026-01-28 | [![2026-01-28](thumbnails/2026/01/20260128.jpg)](wallpapers/2026/01/20260128.jpg) |
-| 2026-01-27 | [![2026-01-27](thumbnails/2026/01/20260127.jpg)](wallpapers/2026/01/20260127.jpg) |
 
 ---
 
