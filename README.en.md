@@ -10,22 +10,22 @@ Bing Wallpaper Archive is a personal archive for daily Bing 1080P wallpapers. It
 
 - Status: Active
 - Version: v0.2.1
-- Images: 1014
-- Thumbnails: 1014
-- Metadata records: 1014
-- Date range: 2023-05-01 - 2026-07-22
+- Images: 1015
+- Thumbnails: 1015
+- Metadata records: 1015
+- Date range: 2023-05-01 - 2026-07-23
 
 ---
 
 ## Latest Wallpaper
 
-**Date:** 2026-07-22
+**Date:** 2026-07-23
 
-**Title:** 瓣叠交响
+**Title:** 缤纷多彩的一家人
 
-**Copyright:** 粉红色大丽花 (© Harald Biebel/Getty Images)
+**Copyright:** 美洲红鹳群在伊莎贝拉岛，加拉帕戈斯群岛，厄瓜多尔 (© Tui De Roy/Nature Picture Library)
 
-[![2026-07-22](thumbnails/2026/07/20260722.jpg)](wallpapers/2026/07/20260722.jpg)
+[![2026-07-23](thumbnails/2026/07/20260723.jpg)](wallpapers/2026/07/20260723.jpg)
 
 ---
 
@@ -33,6 +33,7 @@ Bing Wallpaper Archive is a personal archive for daily Bing 1080P wallpapers. It
 
 | Date | Preview |
 |---|---|
+| 2026-07-23 | [![2026-07-23](thumbnails/2026/07/20260723.jpg)](wallpapers/2026/07/20260723.jpg) |
 | 2026-07-22 | [![2026-07-22](thumbnails/2026/07/20260722.jpg)](wallpapers/2026/07/20260722.jpg) |
 | 2026-07-21 | [![2026-07-21](thumbnails/2026/07/20260721.jpg)](wallpapers/2026/07/20260721.jpg) |
 | 2026-07-20 | [![2026-07-20](thumbnails/2026/07/20260720.jpg)](wallpapers/2026/07/20260720.jpg) |
@@ -44,7 +45,6 @@ Bing Wallpaper Archive is a personal archive for daily Bing 1080P wallpapers. It
 | 2026-07-14 | [![2026-07-14](thumbnails/2026/07/20260714.jpg)](wallpapers/2026/07/20260714.jpg) |
 | 2026-07-13 | [![2026-07-13](thumbnails/2026/07/20260713.jpg)](wallpapers/2026/07/20260713.jpg) |
 | 2026-07-12 | [![2026-07-12](thumbnails/2026/07/20260712.jpg)](wallpapers/2026/07/20260712.jpg) |
-| 2026-07-11 | [![2026-07-11](thumbnails/2026/07/20260711.jpg)](wallpapers/2026/07/20260711.jpg) |
 
 ---
 
